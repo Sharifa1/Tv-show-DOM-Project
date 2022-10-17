@@ -1,3 +1,29 @@
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background-color:rgb(194, 206, 209);
+}
+
 #root {
-  color: red;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  color: black;
+  margin:auto;
+  gap: 1.2rem;
+}
+
+.ep-container {
+  /* border: 1px solid black; */
+  border-radius: 5px;
+  padding: 1rem;
+  margin: 1px;
+  width: 20%;
+  background-color: antiquewhite;
+}
+.ep-Name {
+  border: 1px solid black;
+  border-radius: 5px;
+  padding: 1rem;
 }

@@ -14,6 +14,11 @@ body {
   gap: 1.2rem;
 }
 
+.top_div {
+  width: 100%;
+  margin: 3px;
+  padding-left: 2rem;
+}
 .ep-container {
   /* border: 1px solid black; */
   border-radius: 5px;

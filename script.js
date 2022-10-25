@@ -1,7 +1,18 @@
 //You can edit ALL of the code here
+let allEpisodes;
+const url = "https://api.tvmaze.com/shows/82/episodes"
 function setup() {
-  const allEpisodes = getAllEpisodes();
-  makePageForEpisodes(allEpisodes);
+  fetch(url).then(function (response) {
+    return response.json()
+  }).then((episodes) => {
+    console.log(episodes)
+    allEpisodes = episodes;
+    makePageForEpisodes(allEpisodes);
+    selFunct();
+  }).catch((error) => {
+    console.log(error)
+  })
+  
   // console.log(allEpisodes)
   // allEpisodes.forEach(elem => console.log(elem.name))
 }
@@ -15,23 +26,26 @@ document.body.prepend(topDiv);
 const select = document.createElement("select");
 select.className = "select_input";
 topDiv.appendChild(select);
-const allEpisodes = getAllEpisodes();
+// const allEpisodes = getAllEpisodes();
 const firstOption = document.createElement("option");
 firstOption.text = "All Episodes";
 firstOption.value = -2;
 select.appendChild(firstOption);
 let count = 0;
-allEpisodes.forEach((episode) => {
-  const option = document.createElement("option");
-  option.value = count;
-  count++
-  option.text = `${epCode(episode)} - ${episode.name}`;
-  select.appendChild(option);
-})
+const selFunct = () => {
+  allEpisodes.forEach((episode) => {
+    const option = document.createElement("option");
+    option.value = count;
+    count++;
+    option.text = `${epCode(episode)} - ${episode.name}`;
+    select.appendChild(option);
+  });
+}
+
 select.addEventListener("change", (e) => {
   let epSelected = "";
   rootElem.innerHTML = "";
-  let allEpisodes = getAllEpisodes();
+  // let allEpisodes = getAllEpisodes();
   if(select.value >= 0) {
     epSelected = [allEpisodes[select.value]];
   } else {
@@ -53,7 +67,7 @@ topDiv.appendChild(epLabel);
 
 searchInput.addEventListener("keyup", (e) => {
   let epFound = "";
-  let allEpisodes = getAllEpisodes();
+  // let allEpisodes = getAllEpisodes();
   let currentInput = e.target.value.toLowerCase();
   rootElem.innerHTML = "";
   epFound = allEpisodes.filter((epi) =>
@@ -106,7 +120,7 @@ function makePageForEpisodes(episodeList) {
   const dataText = document.createElement("p");
   dataText.className = "data-text";
   dataText.innerHTML =
-    "All the data are from <a href = 'https://www.tvmaze.com/'>TVMaze.com</a>";
+    "The data has (originally) come from <a href = 'https://www.tvmaze.com/'>TVMaze.com</a>";
   dataText.style.color = "red";
   dataSource.appendChild(dataText);
 

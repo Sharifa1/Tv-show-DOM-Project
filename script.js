@@ -45,7 +45,6 @@ const selFunct = () => {
 select.addEventListener("change", (e) => {
   let epSelected = "";
   rootElem.innerHTML = "";
-  // let allEpisodes = getAllEpisodes();
   if (select.value >= 0) {
     epSelected = [allEpisodes[select.value]];
   } else {
@@ -67,7 +66,6 @@ topDiv.appendChild(epLabel);
 
 searchInput.addEventListener("keyup", (e) => {
   let epFound = "";
-  // let allEpisodes = getAllEpisodes();
   let currentInput = e.target.value.toLowerCase();
   rootElem.innerHTML = "";
   epFound = allEpisodes.filter(
@@ -92,9 +90,7 @@ function epCode(episode) {
   return `S${epNumber}E${seasonNumber}`;
 }
 
-function makePageForEpisodes(episodeList) {
-  // const rootElem = document.getElementById("root");
-  // rootElem.className = "root";
+function makePageForEpisodes(episodeList) { 
   const allEpi = document.getElementById("root");
   rootElem.className = "root";
   episodeList.forEach((episode) => {

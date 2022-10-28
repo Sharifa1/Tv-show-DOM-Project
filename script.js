@@ -1,20 +1,20 @@
 //You can edit ALL of the code here
 let allEpisodes;
-const url = "https://api.tvmaze.com/shows/82/episodes"
+const url = "https://api.tvmaze.com/shows/82/episodes";
 function setup() {
-  fetch(url).then(function (response) {
-    return response.json()
-  }).then((episodes) => {
-    console.log(episodes)
-    allEpisodes = episodes;
-    makePageForEpisodes(allEpisodes);
-    selFunct();
-  }).catch((error) => {
-    console.log(error)
-  })
-  
-  // console.log(allEpisodes)
-  // allEpisodes.forEach(elem => console.log(elem.name))
+  fetch(url)
+    .then(function (response) {
+      return response.json();
+    })
+    .then((episodes) => {
+      console.log(episodes);
+      allEpisodes = episodes;
+      makePageForEpisodes(allEpisodes);
+      selFunct();
+    })
+    .catch((error) => {
+      console.log(error);
+    });
 }
 
 const rootElem = document.getElementById("root");
@@ -40,27 +40,27 @@ const selFunct = () => {
     option.text = `${epCode(episode)} - ${episode.name}`;
     select.appendChild(option);
   });
-}
+};
 
 select.addEventListener("change", (e) => {
   let epSelected = "";
   rootElem.innerHTML = "";
   // let allEpisodes = getAllEpisodes();
-  if(select.value >= 0) {
+  if (select.value >= 0) {
     epSelected = [allEpisodes[select.value]];
   } else {
-    epSelected = allEpisodes
+    epSelected = allEpisodes;
   }
-  
-  makePageForEpisodes(epSelected)
-})
+
+  makePageForEpisodes(epSelected);
+});
 
 const searchInput = document.createElement("input");
 searchInput.id = "search_input";
 searchInput.setAttribute("placeholder", "search episodes");
 topDiv.appendChild(searchInput);
 
-const epLabel = document. createElement("label");
+const epLabel = document.createElement("label");
 epLabel.style.marginLeft = "20px";
 epLabel.innerHTML = "Displaying 73/73 episodes";
 topDiv.appendChild(epLabel);
@@ -70,8 +70,10 @@ searchInput.addEventListener("keyup", (e) => {
   // let allEpisodes = getAllEpisodes();
   let currentInput = e.target.value.toLowerCase();
   rootElem.innerHTML = "";
-  epFound = allEpisodes.filter((epi) =>
-    epi.summary.toLowerCase().includes(currentInput) || epi.name.toLowerCase().includes(currentInput)
+  epFound = allEpisodes.filter(
+    (epi) =>
+      epi.summary.toLowerCase().includes(currentInput) ||
+      epi.name.toLowerCase().includes(currentInput)
   );
   makePageForEpisodes(epFound);
   const epNum = epFound.length;
@@ -115,7 +117,7 @@ function makePageForEpisodes(episodeList) {
     epContainer.appendChild(epSummary);
   });
   const dataSource = document.createElement("div");
-  dataSource.className ="source";
+  dataSource.className = "source";
   rootElem.appendChild(dataSource);
   const dataText = document.createElement("p");
   dataText.className = "data-text";
@@ -123,9 +125,6 @@ function makePageForEpisodes(episodeList) {
     "The data has (originally) come from <a href = 'https://www.tvmaze.com/'>TVMaze.com</a>";
   dataText.style.color = "red";
   dataSource.appendChild(dataText);
-
-
-  // rootElem.innerHTML = `Got ${episodeList.length} episode(s)`;
 }
 
 window.onload = setup;

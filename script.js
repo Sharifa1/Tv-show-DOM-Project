@@ -1,5 +1,6 @@
 //You can edit ALL of the code here
 let allEpisodes;
+const allShows = getAllShows();
 const url = "https://api.tvmaze.com/shows/82/episodes";
 function setup() {
   fetch(url)
@@ -10,7 +11,9 @@ function setup() {
       console.log(episodes);
       allEpisodes = episodes;
       makePageForEpisodes(allEpisodes);
+      selShowFunc();
       selFunct();
+      
     })
     .catch((error) => {
       console.log(error);
@@ -22,6 +25,31 @@ const topDiv = document.createElement("div");
 topDiv.className = "top_div";
 document.body.prepend(topDiv);
 // rootElem.appendChild(topDiv);
+
+const selectShow = document.createElement("select");
+selectShow.className = "select_input";
+topDiv.appendChild(selectShow);
+const showOption = document.createElement("option");
+showOption.text = "All shows";
+selectShow.appendChild(showOption);
+let countShow = 0;
+const selShowFunc = () => {
+  allShows.sort((a, b) => {
+    const showName1 = a.name;
+    const showName2 = b.name;
+    if (showName1 < showName2) return -1;
+    if (showName1 > showName2) return 1;
+    return 0});
+  allShows.forEach((show) => {
+    console.log(show);
+    const showEachOption = document.createElement("option");
+    showEachOption.value = countShow;
+    countShow++;
+    // showEachOption.text = `${showCode(show)} ${show.name}`;
+    showEachOption.text = `${show.name}`;
+    selectShow.appendChild(showEachOption);
+  });
+};
 
 const select = document.createElement("select");
 select.className = "select_input";
@@ -78,6 +106,11 @@ searchInput.addEventListener("keyup", (e) => {
   epLabel.innerHTML = `Displaying ${epNum}/73 episodes`;
 });
 
+function showCode(show) {
+  let showNumber = show.id;
+  return 0;
+}
+
 function epCode(episode) {
   let epNumber = episode.number;
   let seasonNumber = episode.season;
@@ -90,7 +123,7 @@ function epCode(episode) {
   return `S${epNumber}E${seasonNumber}`;
 }
 
-function makePageForEpisodes(episodeList) { 
+function makePageForEpisodes(episodeList) {
   const allEpi = document.getElementById("root");
   rootElem.className = "root";
   episodeList.forEach((episode) => {
